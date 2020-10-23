@@ -3,7 +3,7 @@ import { unlink } from 'fs'
 
 async function run(): Promise<void> {
   try {
-    const files: string = core.getInput('files')
+    const files: string[] = core.getInput('files').split(' ')
 
     core.debug(new Date().toTimeString())
     for await (const file of files) {
