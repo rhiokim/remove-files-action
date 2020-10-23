@@ -1,16 +1,18 @@
 import * as core from '@actions/core'
-import {wait} from './wait'
+import { unlink } from 'fs'
 
 async function run(): Promise<void> {
   try {
-    const ms: string = core.getInput('milliseconds')
-    core.debug(`Waiting ${ms} milliseconds ...`) // debug is only output if you set the secret `ACTIONS_RUNNER_DEBUG` to true
+    const files: string = core.getInput('files')
 
     core.debug(new Date().toTimeString())
-    await wait(parseInt(ms, 10))
+    for await (const file of files) {
+      unlink(file, (error) => {
+        if (error) { throw error }
+      })
+    }
     core.debug(new Date().toTimeString())
 
-    core.setOutput('time', new Date().toTimeString())
   } catch (error) {
     core.setFailed(error.message)
   }

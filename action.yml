@@ -1,11 +1,11 @@
-name: 'Your name here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
+name: 'remove-files'
+description: 'Remove Files'
+author: 'Rhio Kim'
 inputs:
-  milliseconds: # change this
+  files: # change this
     required: true
-    description: 'input description here'
-    default: 'default value if applicable'
+    description: 'Specific files to remove'
+    default: ''
 runs:
   using: 'node12'
   main: 'dist/index.js'
