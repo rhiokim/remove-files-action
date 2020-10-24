@@ -22,3 +22,7 @@ jobs:
       - uses: ./
         with:
           files: './__tests__/fixture'
+
+      - name: After run action
+        run:
+          ls __tests__

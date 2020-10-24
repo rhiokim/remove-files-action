@@ -2,7 +2,7 @@ name: 'remove-files'
 description: 'Remove Files'
 author: 'Rhio Kim'
 inputs:
-  files: # change this
+  files:
     required: true
     description: 'Specific files to remove'
     default: ''
