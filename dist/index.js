@@ -89,18 +89,40 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __asyncValues = (this && this.__asyncValues) || function (o) {
+    if (!Symbol.asyncIterator) throw new TypeError("Symbol.asyncIterator is not defined.");
+    var m = o[Symbol.asyncIterator], i;
+    return m ? m.call(o) : (o = typeof __values === "function" ? __values(o) : o[Symbol.iterator](), i = {}, verb("next"), verb("throw"), verb("return"), i[Symbol.asyncIterator] = function () { return this; }, i);
+    function verb(n) { i[n] = o[n] && function (v) { return new Promise(function (resolve, reject) { v = o[n](v), settle(resolve, reject, v.done, v.value); }); }; }
+    function settle(resolve, reject, d, v) { Promise.resolve(v).then(function(v) { resolve({ value: v, done: d }); }, reject); }
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const core = __importStar(__webpack_require__(186));
-const wait_1 = __webpack_require__(817);
+const fs_1 = __webpack_require__(747);
 function run() {
+    var e_1, _a;
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const ms = core.getInput('milliseconds');
-            core.debug(`Waiting ${ms} milliseconds ...`); // debug is only output if you set the secret `ACTIONS_RUNNER_DEBUG` to true
+            const files = core.getInput('files').split(' ');
             core.debug(new Date().toTimeString());
-            yield wait_1.wait(parseInt(ms, 10));
+            try {
+                for (var files_1 = __asyncValues(files), files_1_1; files_1_1 = yield files_1.next(), !files_1_1.done;) {
+                    const file = files_1_1.value;
+                    fs_1.unlink(file, error => {
+                        if (error) {
+                            throw error;
+                        }
+                    });
+                }
+            }
+            catch (e_1_1) { e_1 = { error: e_1_1 }; }
+            finally {
+                try {
+                    if (files_1_1 && !files_1_1.done && (_a = files_1.return)) yield _a.call(files_1);
+                }
+                finally { if (e_1) throw e_1.error; }
+            }
             core.debug(new Date().toTimeString());
-            core.setOutput('time', new Date().toTimeString());
         }
         catch (error) {
             core.setFailed(error.message);
@@ -516,37 +538,6 @@ exports.issueCommand = issueCommand;
 /***/ (function(module) {
 
 module.exports = require("fs");
-
-/***/ }),
-
-/***/ 817:
-/***/ (function(__unusedmodule, exports) {
-
-"use strict";
-
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.wait = void 0;
-function wait(milliseconds) {
-    return __awaiter(this, void 0, void 0, function* () {
-        return new Promise(resolve => {
-            if (isNaN(milliseconds)) {
-                throw new Error('milliseconds not a number');
-            }
-            setTimeout(() => resolve('done!'), milliseconds);
-        });
-    });
-}
-exports.wait = wait;
-
 
 /***/ })
 
