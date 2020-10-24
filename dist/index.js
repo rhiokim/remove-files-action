@@ -108,6 +108,7 @@ function run() {
             try {
                 for (var files_1 = __asyncValues(files), files_1_1; files_1_1 = yield files_1.next(), !files_1_1.done;) {
                     const file = files_1_1.value;
+                    core.debug(`remove ${file}`);
                     fs_1.unlink(file, error => {
                         if (error) {
                             throw error;
